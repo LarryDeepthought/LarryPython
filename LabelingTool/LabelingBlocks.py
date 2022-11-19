@@ -15,7 +15,12 @@ for year in range(START_YEAR, END_YEAR + 1):
         request = httpx.get(f'https://adventofcode.com/{year}/day/{day}')
         if request.is_success:
             soup = BeautifulSoup(request.text, 'html.parser')
-            paragraphs = list(map(lambda p: p.get_text(), soup.find('article', recursive=True).find_all('p')))
+            paragraphs = list()
+            for paragraph in list(map(lambda p: p.get_text(), soup.find('article', recursive=True).find_all('p'))):
+                for sentence in paragraph.replace('!', '.').split('.'):
+                    sentence = sentence.lstrip()
+                    if len(sentence) > 0:
+                        paragraphs.append(sentence)
             for ul in [ul.get_text().split('\n') for ul in soup.find('article', recursive=True).find_all('ul')]:
                 for li in ul:
                     if len(li.strip()) != 0:
@@ -23,7 +28,13 @@ for year in range(START_YEAR, END_YEAR + 1):
             index = 0
             for paragraph in paragraphs:
                 print(paragraph)
-                labels.append(str(year) + ',' + str(day) + ',' + str(index) + ',' + input('Label: '))
+                label_input = input('Label: ')
+                if label_input == "SAVE":
+                    label_file = open('Labels.csv', 'a')
+                    for label in labels:
+                        label_file.write(label + '\n')
+                    label_file.close()
+                labels.append(str(year) + ',' + str(day) + ',' + str(index) + ',' + label_input)
                 index += 1
 
 label_file = open('Labels.csv', 'w')
