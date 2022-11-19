@@ -12,8 +12,9 @@
 - File Type: `csv`
 - Format: `Year, Day, Paragraph Index, Label`
 - Label Abbreviation:
+
 | **Abbreviation** | **Meaning**           |
-| ---------------- | --------------------- |
+|------------------|-----------------------|
 | e                | Example               |
 | s                | Story                 |
 | q                | Final Question        |

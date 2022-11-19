@@ -1,20 +1,21 @@
 import httpx
 from bs4 import *
 
+FIRST_YEAR_START_DAY = 1
 START_DAY = 1
-END_DAY = 1
+END_DAY = 25
 
 START_YEAR = 2015
-END_YEAR = 2015
+END_YEAR = 2021
 
 labels = list()
 
 for year in range(START_YEAR, END_YEAR + 1):
-    for day in range(START_DAY, END_DAY + 1):
+    for day in range(START_DAY if year != START_YEAR else FIRST_YEAR_START_DAY, END_DAY + 1):
         request = httpx.get(f'https://adventofcode.com/{year}/day/{day}')
         if request.is_success:
             soup = BeautifulSoup(request.text, 'html.parser')
-            paragraphs = soup.find('article', recursive=True).find_all('p')
+            paragraphs = list(map(lambda p: p.get_text(), soup.find('article', recursive=True).find_all('p')))
             for ul in [ul.get_text().split('\n') for ul in soup.find('article', recursive=True).find_all('ul')]:
                 for li in ul:
                     if len(li.strip()) != 0:
