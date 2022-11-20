@@ -2,7 +2,8 @@ import httpx
 from bs4 import *
 from tkinter import *
 
-FIRST_YEAR_START_DAY = 1
+FIRST_DAY_START_INDEX = 4
+FIRST_YEAR_START_DAY = 19
 START_DAY = 1
 END_DAY = 25
 
@@ -11,7 +12,7 @@ END_YEAR = 2021
 
 year = START_YEAR
 day = FIRST_YEAR_START_DAY
-index = 0
+index = FIRST_DAY_START_INDEX
 paragraphs = list()
 
 
@@ -81,21 +82,21 @@ window = Tk()
 window.title('Labeling Tool')
 
 paragraph_display = StringVar()
-paragraph_display_label = Label(window, textvariable=paragraph_display, wraplength=300)
+paragraph_display_label = Label(window, textvariable=paragraph_display, wraplength=500, font=("Monospace", 14))
 
 buttons = list()
 
 buttons.extend([
-    Button(window, text='Story',                command=label_story),
-    Button(window, text='Algorithm',            command=label_algorithm),
-    Button(window, text='Algorithm with Story', command=label_story_algorithm),
-    Button(window, text='Example',              command=label_example),
-    Button(window, text='Final Quest',          command=label_quest)
+    Button(window, font=('Monospace', 12), text='Story',                command=label_story),
+    Button(window, font=('Monospace', 12), text='Algorithm',            command=label_algorithm),
+    Button(window, font=('Monospace', 12), text='Algorithm with Story', command=label_story_algorithm),
+    Button(window, font=('Monospace', 12), text='Example',              command=label_example),
+    Button(window, font=('Monospace', 12), text='Final Quest',          command=label_quest)
 ])
 
 paragraph_display_label.pack()
 for button in buttons:
-    button.pack(side=LEFT)
+    button.pack(side=LEFT, anchor=S, padx=10, pady=10)
 
 reload_paragraphs()
 paragraph_display.set(paragraphs[0])
